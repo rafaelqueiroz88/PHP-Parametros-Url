@@ -42,6 +42,7 @@ namespace Config\Routes {
         public static function Index( $class, $method, $parameter ) {
             
             self::ImportMVC( $class, $method, $parameter );
+
         }
 
         public static function New( $class, $method, $parameter ) {
@@ -81,11 +82,13 @@ namespace Config\Routes {
             include "App/Models/" . ucfirst( $class ) . ".php";
             include "App/Controllers/" . ucfirst( $class ) . ".php";
             include "Resources/Pages/" . ucfirst( $class ) . "/" . ucfirst( $method ) . ".php";
-            
+
         }
 
         public static function SendFailNotification() {
+
             echo "Página não encontrada";
+            
         }
     }
 }
