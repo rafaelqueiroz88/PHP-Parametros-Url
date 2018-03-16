@@ -31,7 +31,7 @@ namespace Config\Routes
         }
         public static function Index($class_name)
         {
-            include "models/$class_name/$class_name.php";
+            include "Models/".ucfirst($class_name).".php";
             include "controllers/$class_name/$class_name.php";
             include "pages/$class_name/$class_name.php";
         }
