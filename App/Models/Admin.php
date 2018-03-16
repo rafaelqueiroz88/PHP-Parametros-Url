@@ -1,13 +1,12 @@
 <?php
-namespace Models
-{
+namespace App\Models {
     use PDO;
     use PDOException;
-    class Admin
-    {
-        public function __construct()
-        {
+    class Admin {
+
+        public function __construct() {
             
         }
+        
     }
 }

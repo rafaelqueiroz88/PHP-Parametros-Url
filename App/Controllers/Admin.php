@@ -1,13 +1,12 @@
 <?php
-namespace Controllers
-{
+namespace App\Controllers {
     use PDO;
     use PDOException;
-    class Admin
-    {
-        public function __construct()
-        {
+    class Admin {
+
+        public function __construct() {
 
         }
+        
     }
 }

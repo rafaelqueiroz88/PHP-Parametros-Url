@@ -1,60 +1,91 @@
 <?php
-namespace Config\Routes
-{
+namespace Config\Routes {
     use PDO;
     use PDOExceptions;
-    class Paths
-    {
-        private static $db = null;
+    
+    class Paths {
+
+        private static $database = null;
         private static $query = null;
-        public function __construct($class_address, $class_name, $method, $parameter, $db)
-        {
-            self::$db = $db;
-            switch($method)
-            {
-                case "index":
-                    self::Index($class_name);
-                    break;
-                case "new":
-                    self::New($class_name, $method, $parameter);
-                    break;
-                case "show":
-                    self::Show();
-                    break;
-                case "edit":
-                    self::Edit();
-                    break;
-                case "delete":
-                    self::Delete();
-                    break;
-            }            
+
+        public function __construct( $class, $method, $parameter, $connection ) {
+
+            $checker = "App/Controllers/" . ucfirst($class) . ".php";
+            $condition = false;
+            if(file_exists($checker)):
+                $condition = true;
+            endif;
+            if($condition == true) :
+                self::$database = $connection;
+                switch( $method ) {
+                    case "index":
+                        self::Index( $class, $method, $parameter );
+                        break;
+                    case "new":
+                        self::New( $class, $method, $parameter );
+                        break;
+                    case "show":
+                        self::Show( $class, $method, $parameter );
+                        break;
+                    case "edit":
+                        self::Edit( $class, $method, $parameter );
+                        break;
+                    case "delete":
+                        self::Delete( $class, $method, $parameter );
+                        break;
+                }
+            else:
+                self::SendFailNotification();
+            endif;
         }
-        public static function Index($class_name)
-        {
-            include "Models/".ucfirst($class_name).".php";
-            include "controllers/$class_name/$class_name.php";
-            include "pages/$class_name/$class_name.php";
+
+        public static function Index( $class, $method, $parameter ) {
+            
+            self::ImportMVC( $class, $method, $parameter );
         }
-        public static function New($class_name, $method, $parameter )
-        {
-            self::$query = array(
-                0 => "Rafael",
-                1 => "Castro",
-                2 => "rafael.qdc88@gmail.com"
-            );
-            self::$db::ExecuteString( $class_name, $method, self::$query, $parameter );
+
+        public static function New( $class, $method, $parameter ) {
+            
+            self::ImportMVC( $class, $method, $parameter );            
+            // Uncomment it if necessary
+            self::$database::ExecuteString( $class, $method, self::$query, $parameter );
+
         }
-        public static function Show()
-        {
-            //your show file or controller here
+
+        public static function Show( $class, $method, $parameter ) {
+            
+            self::ImportMVC( $class, $method, $parameter );
+            // Uncomment it if necessary
+            self::$database::ExecuteString( $class, $method, self::$query, $parameter );
+
         }
-        public static function Edit()
-        {
-            //your edit file or controller here
+
+        public static function Edit( $class, $method, $parameter ) {
+            
+            self::ImportMVC( $class, $method, $parameter );
+            // Uncomment it if necessary
+            self::$database::ExecuteString( $class, $method, self::$query, $parameter );
+
         }
-        public static function Delete()
-        {
-            //your delete file or controller here
+
+        public static function Delete( $class, $method, $parameter ) {
+            
+            self::ImportMVC( $class, $method, $parameter );
+            // Uncomment it if necessary
+            self::$database::ExecuteString( $class, $method, self::$query, $parameter );
+
+        }
+
+        public static function ImportMVC( $class, $method, $parameter ) {
+
+            include "App/Models/" . ucfirst( $class ) . ".php";
+            include "App/Controllers/" . ucfirst( $class ) . ".php";
+            include "Resources/Pages/" . ucfirst( $class ) . "/" . ucfirst( $method ) . ".php";
+            
+        }
+
+        public static function SendFailNotification() {
+            echo "Página não encontrada";
         }
     }
 }

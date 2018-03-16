@@ -1,0 +1,11 @@
+{
+    "location" : "localhost",
+    "database" : "Your database name here",
+    "username" : "root",
+    "password" : "your database password here",
+    "tabelas" : {
+        "nome_tabela" : {
+            "nome_coluna" : "your column name here"
+        }
+    }
+}

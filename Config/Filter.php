@@ -1,61 +1,73 @@
 <?php
 namespace Config\Routes {
+
     use Config\Routes\Routes;
-    $link = $_SERVER['REQUEST_URI'];    
+
+    $link       = $_SERVER['REQUEST_URI'];    
+    $class      = null;
+    $method     = null;
+    $parameter  = null;
+
+    /*
+    * A função está tratando a url e atribuindo os valores para o objeto Routes
+    *
+    */
+    function FilterUrl( $request, $parameters, $routes, $class, $method ) {
+        $routes::$_class = $class;
+        if( $class == "home" ) :
+            $routes::$_method = "index";
+            $routes::$_parameter = 0;
+        else :
+            if (isset($request[3])) :
+                if( $request[3] == "" || $request[3] == null ) :
+                    $method = "index";
+                    $routes::$_method = $method;
+                    $routes::$_parameter = 0;
+                else :
+                    $method = $request[3];
+                    if( $method == "new" ) :
+                        $routes::$_method = $method;
+                        $routes::$_parameter = 0;
+                    elseif ( $method != "new" ) :
+                        if( !isset( $request[4] ) ) :
+                            $parameter = 0;
+                        else :
+                            if( $request[4] == "" || $request[4] == null ) :
+                                $parameter = 0;
+                            else:
+                                $parameter = $request[4];
+                            endif;
+                        endif;
+                    endif;
+                    $routes::$_method = $method;
+                    $routes::$_parameter = 0;
+                endif;
+            else:
+                $method = "index";
+                if( $method == "new" ) :
+                    $routes::$_method = $method;
+                    $routes::$_parameter = 0;
+                elseif ( $method != "new" ) :
+                    $routes::$_method = $method;
+                    $routes::$_parameter = 0;
+                endif;
+            endif;
+        endif;
+    }
+
     $request = explode( "/", $link );
     $parameters = count( $request );
-    $class = null;
-    $method = null;
-    $parameter = null;
+
     if ( $request[2] != null || $request[2] != "" ) :
         $class = $request[2];
     else :
         $class = "home";
-    endif;    
-    $routes = new Routes();
-    filterUrl( $request, $parameters, $routes, $class );
-    function filterUrl( $request, $parameters, $routes, $class ) {
-        if( $parameters == 3 ) :
-            if ( $class == "home" ) :
-                /*$method = $request[3];
-                $routes::$_class_name = $class;
-                $routes::$_class_address = $class;
-                $routes::$_method = $method;
-                $routes::$_parameter = $parameter;*/
-                //Routes::add(); //Passar apenas uma vez no final
-            elseif( $request[3] == "new" ) :
-                /*$method = $request[3];
-                $routes::$_class_name = $class;
-                $routes::$_class_address = $class;
-                $routes::$_method = $method;
-                $routes::$_parameter = $parameter;*/
-                //Routes::add(); //Passar apenas uma vez no final
-            endif;
-        elseif( $parameters > 3 && ( $request[3] != null || $request[3] != "" ) ) :
-            if( isset( $request[3] ) ) :
-                if( isset( $request[4] ) ) :
-                    if( $request[4] == null || $request[4] == "" ) :
-                        echo "Faltam parametros para a função " . $request[3];
-                    else :
-                        /*
-                        $method = $request[3];
-                        $parameter = $request[4];
+    endif;
 
-                        $routes::$_class_name = $class;
-                        $routes::$_class_address = $class;
-                        $routes::$_method = $method;
-                        $routes::$_parameter = $parameter;
-                        */
-                        //Routes::add(); //Passar apenas uma vez no final
-                    endif;
-                else :
-                    echo "Faltam parametros para a função " . $request[3];
-                endif;
-            else :
-                //Routes::add(); //Passar apenas uma vez no final
-            endif;
-        endif;
-    }
-    Routes::add(); // "/" . $class, $class, "index", "0" <- passar estes atributos tratados nas classes acima
-    Routes::submit();
+    $routes = new Routes();
+
+    FilterUrl( $request, $parameters, $routes, $class, $method );
+
+    Routes::Submit();
+
 }
