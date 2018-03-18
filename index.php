@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "Config/Database.php";
 include "App/Helpers/Constructor.php";
 use App\Helper\Render;
@@ -12,6 +13,8 @@ use App\Helper\Render;
         <title>
             <?php Render::PageName(); ?>
         </title>
+        <link rel="stylesheet" href="Resources/Assets/css/bootstrap.css">
+        <link rel="stylesheet" href="Resources/Assets/css/style.scss">
     </head>
     <body>
         
@@ -21,5 +24,7 @@ use App\Helper\Render;
 
         <?php Render::Footer(); ?>
 
+        <script src="Resources/Assets/js/jquery-3.2.1.js"></script>        
+        <script src="Resources/Assets/js/bootstrap.js"></script>
     </body>
 </html>

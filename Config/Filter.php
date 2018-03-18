@@ -10,15 +10,15 @@ namespace Config\Routes {
 
     /*
     * A função está tratando a url e atribuindo os valores para o objeto Routes
-    *
+    * Chamar esta classe se o modulo de navegação for o modulo padrão
     */
     function FilterUrl( $request, $parameters, $routes, $class, $method ) {
         $routes::$_class = $class;
         if( $class == "home" ) :
             $routes::$_method = "index";
             $routes::$_parameter = 0;
-        else :
-            if (isset($request[3])) :
+        elseif( $class != "home" ) :
+            if ( isset( $request[3] ) ) :
                 if( $request[3] == "" || $request[3] == null ) :
                     $method = "index";
                     $routes::$_method = $method;
@@ -53,6 +53,8 @@ namespace Config\Routes {
                 endif;
             endif;
         endif;
+
+        
     }
 
     $request = explode( "/", $link );
@@ -66,8 +68,7 @@ namespace Config\Routes {
 
     $routes = new Routes();
 
-    FilterUrl( $request, $parameters, $routes, $class, $method );
+    FilterUrl( $request, $parameters, $routes, $class, $method );    
 
     Routes::Submit();
-
 }

@@ -1,8 +1,8 @@
 {
     "location" : "localhost",
-    "database" : "Your database name here",
+    "database" : "dominostore",
     "username" : "root",
-    "password" : "your database password here",
+    "password" : "root",
     "tabelas" : {
         "nome_tabela" : {
             "nome_coluna" : "your column name here"

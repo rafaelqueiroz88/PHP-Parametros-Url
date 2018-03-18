@@ -1,22 +1,21 @@
 <?php
 namespace Config\Routes {
-    use PDO;
-    use PDOExceptions;
+    //use PDO;
+    //use PDOExceptions;
     
     class Paths {
 
-        private static $database = null;
         private static $query = null;
 
-        public function __construct( $class, $method, $parameter, $connection ) {
+        public function __construct( $class, $method, $parameter ) {
 
             $checker = "App/Controllers/" . ucfirst($class) . ".php";
             $condition = false;
-            if(file_exists($checker)):
+            if( file_exists( $checker ) ):
                 $condition = true;
             endif;
-            if($condition == true) :
-                self::$database = $connection;
+            if( $condition == true ) :
+                
                 switch( $method ) {
                     case "index":
                         self::Index( $class, $method, $parameter );
@@ -41,6 +40,7 @@ namespace Config\Routes {
 
         public static function Index( $class, $method, $parameter ) {
             
+            //self::$database::ExecuteString( $class, $method, self::$query, $parameter );
             self::ImportMVC( $class, $method, $parameter );
 
         }
@@ -49,7 +49,7 @@ namespace Config\Routes {
             
             self::ImportMVC( $class, $method, $parameter );            
             // Uncomment it if necessary
-            self::$database::ExecuteString( $class, $method, self::$query, $parameter );
+            //self::$database::ExecuteString( $class, $method, self::$query, $parameter );
 
         }
 
@@ -57,7 +57,7 @@ namespace Config\Routes {
             
             self::ImportMVC( $class, $method, $parameter );
             // Uncomment it if necessary
-            self::$database::ExecuteString( $class, $method, self::$query, $parameter );
+            ///self::$database::ExecuteString( $class, $method, self::$query, $parameter );
 
         }
 
@@ -65,7 +65,7 @@ namespace Config\Routes {
             
             self::ImportMVC( $class, $method, $parameter );
             // Uncomment it if necessary
-            self::$database::ExecuteString( $class, $method, self::$query, $parameter );
+            //self::$database::ExecuteString( $class, $method, self::$query, $parameter );
 
         }
 
@@ -73,7 +73,7 @@ namespace Config\Routes {
             
             self::ImportMVC( $class, $method, $parameter );
             // Uncomment it if necessary
-            self::$database::ExecuteString( $class, $method, self::$query, $parameter );
+            //self::$database::ExecuteString( $class, $method, self::$query, $parameter );
 
         }
 
@@ -87,7 +87,7 @@ namespace Config\Routes {
 
         public static function SendFailNotification() {
 
-            echo "Página não encontrada";
+            echo "<h1>Página não encontrada</h1>";
             
         }
     }
